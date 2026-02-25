@@ -3,8 +3,6 @@ import time
 import duckdb
 
 '''
-不会。
-
 在你的代码里 con = duckdb.connect() 没有传入文件路径，DuckDB 默认创建的是 内存数据库 ，
 不会在当前目录生成类似 *.duckdb 的临时数据库文件；只有你写成 duckdb.connect("xxx.duckdb") 才会落盘生成数据库文件。
 
@@ -67,10 +65,8 @@ def save_excel_to_duckdb(excel_file, db_path):
 
 # 定义数据库文件路径
 db_file_path = os.path.join(duckdb_output, excel_file.replace(".xlsx", ".duckdb"))
-
 # 执行保存操作，并获取生成的表名
 saved_table_name = save_excel_to_duckdb(excel_file, db_file_path)
-print('表名：',saved_table_name)
 
 def read_from_duckdb(db_path, table_name):
     """从 DuckDB 读取数据并展示"""
