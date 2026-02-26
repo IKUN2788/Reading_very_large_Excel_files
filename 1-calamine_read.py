@@ -1,7 +1,7 @@
 import python_calamine
 import time
 
-file_path = "test.xlsx"
+file_path = "sample_data.xlsx"
 # 推荐使用二进制模式读取
 with open(file_path, 'rb') as f_r:
     xls = python_calamine.CalamineWorkbook.from_filelike(f_r)

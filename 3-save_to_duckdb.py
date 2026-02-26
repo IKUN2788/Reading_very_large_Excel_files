@@ -3,10 +3,10 @@ import duckdb
 import os
 import time
 
-# excel_file = "sample_data.xlsx"
-excel_file = "test.xlsx"
-db_dir = "temp_db"
-db_path = os.path.join(db_dir, "excel_data.duckdb")
+excel_file = "sample_data.xlsx"
+# excel_file = "large_test.xlsx"
+db_dir = "duckdb_output"
+db_path = os.path.join(db_dir, f"{excel_file.split('.')[0]}.duckdb")
 
 # 1. 确保临时目录存在
 if not os.path.exists(db_dir):
@@ -49,9 +49,9 @@ try:
         df = pd.DataFrame(rows, columns=headers)
         df = df.replace('', np.nan).infer_objects(copy=False)
         
-        # 将 DataFrame 写入 DuckDB 表 'excel_data'
-        con.execute("CREATE OR REPLACE TABLE excel_data AS SELECT * FROM df")
-        print("表 'excel_data' 已通过 Pandas 桥接创建成功。")
+        # 将 DataFrame 写入 DuckDB 表 'sample_data'
+        con.execute("CREATE OR REPLACE TABLE sample_data AS SELECT * FROM df")
+        print("表 'sample_data' 已通过 Pandas 桥接创建成功。")
         
         
     except ImportError:
@@ -61,13 +61,13 @@ try:
         
         # 创建表，所有列都设为 VARCHAR
         cols_def = ", ".join([f'"{h}" VARCHAR' for h in headers])
-        create_sql = f"CREATE OR REPLACE TABLE excel_data ({cols_def})"
+        create_sql = f"CREATE OR REPLACE TABLE sample_data ({cols_def})"
         con.execute(create_sql)
         
         # 插入数据 (需将所有值转为字符串，处理 None)
         # 这是一个比较慢的方法，但最通用
         placeholders = ', '.join(['?'] * len(headers))
-        insert_sql = f"INSERT INTO excel_data VALUES ({placeholders})"
+        insert_sql = f"INSERT INTO sample_data VALUES ({placeholders})"
         
         # 转换数据为字符串，避免类型转换错误
         safe_rows = [[str(cell) if cell is not None else None for cell in row] for row in rows]

@@ -7,9 +7,9 @@ import numpy as np
 
 # 配置
 EXCEL_FILE = "sample_data.xlsx"
-DB_DIR = "temp_db"
-DB_PATH = os.path.join(DB_DIR, "excel_data.duckdb")
-TABLE_NAME = "excel_data"
+DB_DIR = "duckdb_output"
+DB_PATH = os.path.join(DB_DIR, f"{EXCEL_FILE.split('.')[0]}.duckdb")
+TABLE_NAME = EXCEL_FILE.split('.')[0]
 
 def save_excel_to_duckdb(excel_path, db_path, table_name):
     """读取 Excel 并保存到 DuckDB"""
