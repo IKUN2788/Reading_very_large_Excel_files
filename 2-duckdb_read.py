@@ -65,6 +65,7 @@ def save_excel_to_duckdb(excel_file, db_path):
 
 # 定义数据库文件路径
 db_file_path = os.path.join(duckdb_output, excel_file.replace(".xlsx", ".duckdb"))
+
 # 执行保存操作，并获取生成的表名
 saved_table_name = save_excel_to_duckdb(excel_file, db_file_path)
 
